@@ -16,6 +16,28 @@ public class KvittoTests
         };
 
         Assert.Equal(250m, Kvittoraknaren.BeraknaTotal(varor));
+    }
 
+    [Fact]
+    public void RabattkodRABATT10_Drar10ProcentForeMoms()
+    {
+        var varor = new[]
+        {
+            new Vara("Bok", 100m, 0.25m),
+            new Vara("Penna", 100m, 0.25m)
+        };
+
+        Assert.Equal(225m, Kvittoraknaren.BeraknaTotal(varor, "RABATT10"));
+    }
+
+    [Fact]
+    public void OgiltigRabattkod_GerIngenRabatt()
+    {
+        var varor = new[]
+        {
+            new Vara("Bok", 100m, 0.25m)
+        };
+
+        Assert.Equal(125m, Kvittoraknaren.BeraknaTotal(varor, "FELKOD"));
     }
 }

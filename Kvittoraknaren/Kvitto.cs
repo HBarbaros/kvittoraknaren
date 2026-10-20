@@ -9,8 +9,12 @@ public record Vara(string Namn, decimal PrisExklMoms, decimal Momsstas);
 
 public static class Kvittoraknaren
 {
-    public static decimal BeraknaTotal(IEnumerable<Vara> varor)
+    private const string Rabattkod = "RABATT10";
+
+    public static decimal BeraknaTotal(IEnumerable<Vara> varor, string? rabattkod = null)
     {
-        return varor.Sum(v => v.PrisExklMoms * (1 + v.Momsstas));
+        var rabattfaktor = rabattkod == Rabattkod ? 0.90m : 1m;
+
+        return varor.Sum(v => v.PrisExklMoms * rabattfaktor * (1 + v.Momsstas));
     }
 }
