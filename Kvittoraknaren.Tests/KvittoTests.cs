@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.Marshalling;
 using Kvittoraknaren;
 using Xunit;
 
@@ -16,6 +15,17 @@ public class KvittoTests
         };
 
         Assert.Equal(250m, Kvittoraknaren.BeraknaTotal(varor));
+    }
 
+    [Fact]
+    public void RabattkodTioProcent_DrasForeMoms()
+    {
+        var varor = new[]
+        {
+            new Vara("Bok", 100m, 0.25m),
+            new Vara("Mat", 100m, 0.12m)
+        };
+
+        Assert.Equal(213.30m, Kvittoraknaren.BeraknaTotal(varor, Kvittoraknaren.RabattkodTioProcent));
     }
 }
